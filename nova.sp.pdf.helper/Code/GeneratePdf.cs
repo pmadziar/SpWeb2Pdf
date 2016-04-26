@@ -74,9 +74,7 @@ namespace nova.sp.pdf.helper.Code
                         RedirectStandardError = true,
                         RedirectStandardOutput = true
                     };
-                    //info.UserName = @"MADZIAR\spssetup";
-                    //info.Password = ToSecureString("1q2w3e!Q@W#E");
-                    using (Process process = Process.Start(info))
+                        using (Process process = Process.Start(info))
                     {
                         string output = process.StandardOutput.ReadToEnd();
                         process.WaitForExit();
@@ -137,13 +135,8 @@ namespace nova.sp.pdf.helper.Code
             if (succeed)
             {
                 var pdfBytes = File.ReadAllBytes(pdfPath);
-                /*
-                 * Content-Type: application/pdf
-Content-Length: xxxxx
-Content-Disposition: attachment;filename='downloaded.pdf'
-*/
                 context.Response.ContentType = "application/pdf";
-                context.Response.Headers.Add("Content-Disposition", "attachment;filename='auto-generated.pdf'");
+                context.Response.Headers.Add("Content-Disposition", "inline; filename=\"auto-generated.pdf\"");
                 context.Response.Headers.Add("Content-Length", pdfBytes.Length.ToString());
                 context.Response.WriteFile(pdfPath);
             }
