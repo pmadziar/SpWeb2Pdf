@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="1d09a307-b39f-42fb-9fd4-dc8e0ccb80c7" solutionId="1d09a307-b39f-42fb-9fd4-dc8e0ccb80c7" resetWebServer="false" sharePointProductVersion="15.0" name="nova.sp.pdf.helper" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <customAssembly location="phantomjs.exe" deploymentTarget="WebApplication" sourcePath="..\..\..\..\Tools\phantomjs\bin\phantomjs.exe" />
+  </assemblies>
+  <projectItems>
+    <projectItemReference itemId="c26c52ea-f176-4a66-833c-cd96ec4b89c1" />
+  </projectItems>
+</package>
