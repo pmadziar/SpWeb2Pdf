@@ -14,7 +14,9 @@ http://sharepoint.url/sites/site/_layouts/15/nova.sp.pdf.helper/GeneratePdf.ashx
  - the url value should be encoded using JavaScript encodeURIComponent or .net Uri.EscapeDataString
 
 ## How it works
-The [PhantomJs](http://phantomjs.org/) is used to render the URL from the query string. The executabled is include in the project in the manifest and is installed into web application (IIS) bin folder. The standard PhantomJs _rasterize.js_ script is used to render the page. The script and config file for PhantomJs are included in project as embedded resources.
+The [PhantomJs](http://phantomjs.org/) is used to render the URL from the query string. The executable is included in the project in the manifest and is installed into web application (IIS) bin folder. The standard PhantomJs _rasterize.js_ script is used to render the page. The script and config file for PhantomJs are included in project as embedded resources.
+
+The executable is called with "elevated privileges", so App Pool of the Web Application is used to run Phantom and for authentication to destination site.
 
 The page is implemented as HTTP handler. It returns the rendered PDF or error info as HTML.
 
