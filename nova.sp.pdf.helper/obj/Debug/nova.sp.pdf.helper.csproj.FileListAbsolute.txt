@@ -80,4 +80,5 @@ C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\bin\Debug\zh-Hans\System.Spa
 C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\bin\Debug\zh-Hant\System.Spatial.resources.dll
 C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\obj\Debug\nova.sp.pdf.helper.dll
 C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\obj\Debug\nova.sp.pdf.helper.pdb
-C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\obj\Debug\nova.sp.pdf.helper.csprojResolveAssemblyReference.cache
+C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\bin\Debug\nova.sp.pdf.helper.dll.CodeAnalysisLog.xml
+C:\Source\github\nova.pdf.helper\nova.sp.pdf.helper\bin\Debug\nova.sp.pdf.helper.dll.lastcodeanalysissucceeded
