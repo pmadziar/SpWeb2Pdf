@@ -21,6 +21,8 @@ namespace nova.sp.pdf.helper.Code
             {"Config", "pdf-helper-config.json"},
             {"Script", "rasterize.js"}
         };
+
+        private const string urlQueryString = "url";
         private const string ResourceDir = "PhantomFiles";
 
         private string msg = string.Empty;
@@ -98,25 +100,59 @@ namespace nova.sp.pdf.helper.Code
             bool succeed = true;
             string tempFolder = string.Empty;
             string pdfPath = string.Empty;
+            string url = null;
+
+
             try
             {
-                var path = Path.Combine(apPath, @"bin\phantomjs.exe");
-                var bytes = File.ReadAllBytes(path);
-
-                var aspTemp = HttpRuntime.CodegenDir;
-
-                tempFolder = Path.Combine(aspTemp, Guid.NewGuid().ToString("D").ToLower());
-                if (!Directory.Exists(tempFolder))
+                if (!context.Request.RequestType.Equals("GET", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Directory.CreateDirectory(tempFolder);
+                    succeed = false;
+                    msg += $"<br />Error: the request type is not GET";
                 }
 
-                Dictionary<string, string> files = this.saveResourcesToDisk(tempFolder);
+                if (
+                    !(context.Request.QueryString.HasKeys() &&
+                      context.Request.QueryString.Keys.Cast<string>().Contains(urlQueryString)))
+                {
+                    succeed = false;
+                    msg += $"<br />Error: url doesn't contain \"{urlQueryString}\" parameter";
+                }
+                else
+                {
+                    var urlEncoded = context.Request.QueryString[urlQueryString];
+                    if (!string.IsNullOrEmpty(urlEncoded))
+                    {
+                        url = System.Uri.UnescapeDataString(urlEncoded);
+                    }
+                }
 
-                pdfPath = Path.Combine(tempFolder, "auto-generated.pdf");
+                if (string.IsNullOrEmpty(url))
+                {
+                    succeed = false;
+                    msg += $"<br />Error: url parameter is empty";
+                }
 
-                string exeArgs = $"\"{files["Script"]}\" http://govconnect/Pages/Health-Matters.aspx \"{pdfPath}\" --config=\"{files["Config"]}\"";
-                succeed = this.runEex(path, exeArgs);
+                if (succeed)
+                {
+                    var path = Path.Combine(apPath, @"bin\phantomjs.exe");
+                    var bytes = File.ReadAllBytes(path);
+
+                    var aspTemp = HttpRuntime.CodegenDir;
+
+                    tempFolder = Path.Combine(aspTemp, Guid.NewGuid().ToString("D").ToLower());
+                    if (!Directory.Exists(tempFolder))
+                    {
+                        Directory.CreateDirectory(tempFolder);
+                    }
+
+                    Dictionary<string, string> files = this.saveResourcesToDisk(tempFolder);
+
+                    pdfPath = Path.Combine(tempFolder, "auto-generated.pdf");
+
+                    string exeArgs = $"\"{files["Script"]}\" \"{url}\" \"{pdfPath}\" --config=\"{files["Config"]}\"";
+                    succeed = this.runEex(path, exeArgs);
+                }
             }
             catch (Exception ex)
             {
